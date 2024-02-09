@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id String @id @default(uuid())
+  name String 
+}
+
+model Game{
+  id String @id @default(uuid())
+  finished Boolean @default(false)
+  active Boolean @default(true)
+  gameday Int
+
+  player1Id String 
+  player2Id String 
+
+  player1Score Int
+  player2Score Int
+
+  player1Over100 Int?
+  player2Over100 Int?
+
+  player1Dq Float?
+  player2Dq Float?
+
+  winnerId Int?
+  looserId Int?
+
+}

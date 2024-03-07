@@ -1,14 +1,26 @@
-import React from 'react'
+"use client"
+import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation";
 
-export default function navbar() {
+export default async function navbar() {
+  const router = useRouter()
+
+  const openCreateForm = () => {
+    router.push('/generateGamePage')
+  }
+
+  function goBackHome() {
+    router.push("/")
+  }
+
   return (
     <nav className='inset-x-0 w-full h-[80px] bg-[#111] border-b-2 
     border-b-primary flex items-center justify-between z-50 top-0 overflow-hidden fixed nav'>
-        <div className='text-2xl font-semibold pl-[36px]'>
+        <div className='text-2xl font-semibold pl-[36px] cursor-pointer' onClick={goBackHome}>
             Seefahrer<span className='text-primary font-bold'>180</span>.
         </div>
         <div className='pr-[36px]'>
-            Menü
+        <Button onClick={openCreateForm} className="text-white">Spiele erstellen</Button>
         </div>
     </nav>
   )

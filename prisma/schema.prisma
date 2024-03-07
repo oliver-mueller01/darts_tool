@@ -11,29 +11,47 @@ datasource db {
 }
 
 model Player {
-  id String @id @default(uuid())
-  name String 
+  id   String @id @default(uuid())
+  name String
 }
 
-model Game{
-  id String @id @default(uuid())
+model GameDay {
+  id       String  @id @default(uuid())
   finished Boolean @default(false)
-  active Boolean @default(true)
-  gameday Int
+  gameday  Int
 
-  player1Id String 
-  player2Id String 
+  player1Id String
+  player2Id String
 
-  player1Score Int
-  player2Score Int
+  player1Score Int @default(0)
+  player2Score Int @default(0)
 
-  player1Over100 Int?
-  player2Over100 Int?
+  winnerId String?
+}
 
-  player1Dq Float?
-  player2Dq Float?
+model Game {
+  id        String   @id @default(uuid())
+  playedAt DateTime @default(now())
+  player1Id String
+  player2Id String
 
-  winnerId Int?
-  looserId Int?
+  player1Name String?
+  player2Name String?
 
+  player1Score Int @default(0)
+  player2Score Int @default(0)
+
+  player1InverseScore Int @default(0)
+  player2InverseScore Int @default(0)
+
+  player1Average Float @default(0)
+  player2Average Float @default(0)
+
+  player1Dq Float @default(0)
+  player2Dq Float @default(0)
+
+  player1Hundreds Int @default(0)
+  player2Hundreds Int @default(0)
+
+  winnerId String?
 }

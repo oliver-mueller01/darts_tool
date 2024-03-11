@@ -8,6 +8,12 @@ import { NextResponse } from "next/server";
 export async function POST(req: any) {
     const requestData = await req.json();
     console.log(requestData) 
+    let winnerId = ""
+    if(requestData.player1Score > requestData.player2Score){
+      winnerId = requestData.player1Id
+    }else{
+      winnerId = requestData.player2Id
+    }
     const game = await db.game.create({
         data:{
           player1Id: requestData.player1Id,
@@ -23,9 +29,23 @@ export async function POST(req: any) {
           player1Dq: requestData.player1Dq,
           player2Dq: requestData.player2Dq,
           player1Hundreds: requestData.player1Hundreds,
-          player2Hundreds: requestData.player2Hundreds
+          player2Hundreds: requestData.player2Hundreds,
+          winnerId: winnerId
         }
       }) 
-   
+    const idGameDay = requestData.gameDayId as string
+
+    const updatedGameday = await db.gameDay.update({
+      where: {
+        id: idGameDay
+      },
+      data: {
+        player1Score: requestData.player1Score,
+        player2Score: requestData.player2Score,
+        finished: true,
+        winnerId: winnerId
+      }
+    })
+  
     return NextResponse.json({}, { status: 201 });
 }

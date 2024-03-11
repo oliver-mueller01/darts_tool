@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useRouter } from 'next/navigation'
 
 interface Props {
   gameInfo: GameDay
@@ -39,7 +40,7 @@ interface GameData {
 }
 function GameCard(props: Props) {
   const { gameInfo, player1Name, player2Name } = props
-
+  const router = useRouter()
 
   const player1ScoreStr = gameInfo.player1Score.toString()
   const player2ScoreStr = gameInfo.player2Score.toString()
@@ -90,10 +91,10 @@ function GameCard(props: Props) {
   }, [gameData]);
 
   function createGame() {
-    console.log(gameData) 
     const response = fetch('/api/createGame', {
       method: 'POST',
       body: JSON.stringify({
+        gameDayId: gameInfo.id,
         player1Id: gameInfo.player1Id,
         player2Id: gameInfo.player2Id,
         player1Name: player1Name,
@@ -109,16 +110,25 @@ function GameCard(props: Props) {
         player1Hundreds: gameData.player1Hundreds,
         player2Hundreds: gameData.player2Hundreds
       })}
-    )
+    ).then(() => {
+      router.refresh()
+    })
+    
   }
   return (
     <AlertDialog>
       <AlertDialogTrigger className='grid grid-cols-9 px-3 border-y h-[100px] items-center text-center hover:bg-slate-950 w-full'>
-        <h1 className='col-span-3 text-xl font-bold'>{player1Name}</h1>
-        <h2 className='col-span-1 text-3xl text-primary font-bold'>{player1ScoreStr !== "69" ? player1ScoreStr : " "}</h2>
+      {gameInfo.winnerId === gameInfo.player1Id ? 
+      <h1 className='col-span-3 text-xl font-bold text-green-700'>{player1Name}</h1>  :
+      <h1 className='col-span-3 text-xl font-bold'>{player1Name}</h1>
+      }
+        <h2 className='col-span-1 text-3xl text-primary font-bold'>{gameInfo.finished ? player1ScoreStr : " "}</h2>
         <h3 className='col-span-1'>vs</h3>
-        <h2 className='col-span-1 text-3xl text-primary font-bold'>{player2ScoreStr !== "69" ? player2ScoreStr : " "}</h2>
-        <h1 className='col-span-3 text-xl font-bold'>{player2Name}</h1>
+        <h2 className='col-span-1 text-3xl text-primary font-bold'>{gameInfo.finished ? player2ScoreStr : " "}</h2>
+      {gameInfo.winnerId === gameInfo.player2Id ? 
+      <h1 className='col-span-3 text-xl font-bold text-green-700'>{player2Name}</h1>  :
+      <h1 className='col-span-3 text-xl font-bold'>{player2Name}</h1>
+      }
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

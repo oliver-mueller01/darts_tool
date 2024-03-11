@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GameCard from "./GameCard";
 import { db } from "@/app/db";
+import { InferGetStaticPropsType } from "next/types";
+
+
+
+
 
 export default async function GamesList() {
-  /* const first = await createGame("48f2db9e-a2b2-41e4-a15b-21e01be07546","4eecd79f-c738-4d6e-a075-974678f7bb64",1)
-  const second = await createGame("4eecd79f-c738-4d6e-a075-974678f7bb64","672d95fd-988b-48af-ad98-a62503bf249a",2) */
   const gameDayGames = await db.gameDay.findMany();
+  
+
 
   const maxGameDay = Math.max.apply(
     Math,

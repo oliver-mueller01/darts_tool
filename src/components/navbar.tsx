@@ -13,6 +13,10 @@ export default async function navbar() {
     router.push("/")
   }
 
+  function debug(){
+    fetch("/api/getGameDayStandings")
+  }
+
   return (
     <nav className='inset-x-0 w-full h-[80px] bg-[#111] border-b-2 
     border-b-primary flex items-center justify-between z-50 top-0 overflow-hidden fixed nav'>

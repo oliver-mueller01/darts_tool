@@ -54,7 +54,7 @@ export default async function GamesList() {
               }
             })
             return (<div>
-              <GameCard gameInfo={game} player1Name={player1Name?.name} player2Name={player2Name?.name}/>
+              <GameCard key={game.id} gameInfo={game} player1Name={player1Name?.name} player2Name={player2Name?.name}/>
               </div>)
           })}
         </div>)

@@ -29,7 +29,7 @@ async function Standings() {
     <div className="">
       {sortedStandings.map((p) => {
         return (
-          <div className="grid grid-cols-5 gap-4 pt-3 items-center">
+          <div key={p.playerId} className="grid grid-cols-5 gap-4 pt-3 items-center">
             <span className="text-primary text-2xl col-span-1 items-center pl-3">{sortedStandings.findIndex((fI) => fI.playerId === p.playerId) + 1 }</span>
             <div className="col-span-3 flex flex-row items-center gap-4 justify-center">
               {/* <Avatar className="">

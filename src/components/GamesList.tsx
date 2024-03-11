@@ -35,7 +35,7 @@ export default async function GamesList() {
     <div className="overflow-auto">
       {gameDayArraySplit.map((gameDay, index) => {
         return(
-        <div>
+        <div key={index}>
           <div className="w-full py-3 bg-gray-900">
             <h1 className="text-xl font-semibold text-white pl-[36px]">
               Spieltag {index +1}
@@ -53,7 +53,7 @@ export default async function GamesList() {
                 id: game.player2Id
               }
             })
-            return (<div>
+            return (<div key={game.id+20000}>
               <GameCard key={game.id} gameInfo={game} player1Name={player1Name?.name} player2Name={player2Name?.name}/>
               </div>)
           })}

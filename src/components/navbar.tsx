@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
 
-export default async function navbar() {
+export default async function Navbar() {
   const router = useRouter()
 
   const openCreateForm = () => {
